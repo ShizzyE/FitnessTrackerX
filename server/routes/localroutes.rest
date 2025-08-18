@@ -1,0 +1,32 @@
+GET http://localhost:8000/workouts
+
+###
+
+GET http://localhost:8000/workouts/68a154a619a93b76ab3ae099
+
+###
+
+POST http://localhost:8000/workouts
+Content-Type: application/json
+
+{
+    "name": "Bench Press",
+    "reps": 10,
+    "sets": 3,
+    "weight": 225
+}
+
+###
+
+PATCH http://localhost:8000/workouts/68a154a619a93b76ab3ae099
+Content-Type: application/json
+
+{
+    "name": "Updated Workout1",
+    "reps": 0,
+    "sets": 0,
+    "weight": 0
+}
+
+###
+DELETE http://localhost:8000/workouts/68a154a619a93b76ab3ae099
