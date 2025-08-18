@@ -3,6 +3,7 @@ html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
+  color: black;
 }
 
 .App {
@@ -10,4 +11,8 @@ html, body, #root {
   flex-direction: column;
   min-height: 100vh;
   text-align: center;
+}
+
+h1 {
+  font-size: 28px;
 }
