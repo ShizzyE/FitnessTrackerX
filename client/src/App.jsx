@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 
 export default function App() {
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkoutsState] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,23 +20,21 @@ export default function App() {
   }, []);
 
   const getWorkouts = async () => {
-    setLoading(true);
-    try {
-      await fetch(`${API_BASE}/workouts`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-          setWorkouts(data);
-        });
-    } catch (error) {
-      setError(error.message || "Unexpected Error");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  try {
+    const res = await fetch(`${API_BASE}/workouts`);
+    const data = await res.json();
+    console.log({ data });
+    setWorkoutsState(data);
+  } catch (error) {
+    setError(error.message || "Unexpected Error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const addWorkout = (newWorkout) => {
-    setWorkouts((prev) => [...prev, newWorkout]);
+    setWorkoutsState((prev) => [...prev, newWorkout]);
   };
 
   return (
