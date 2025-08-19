@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 
 export default function App() {
-  const [workouts, setWorkouts] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,39 +15,37 @@ export default function App() {
       ? `http://localhost:8000`
       : process.env.REACT_APP_BASE_URL;
 
-    useEffect(() => {
-      let ignore = false;
-
-      if(!ignore){
-        getWorkouts();
-      }
-
-      return () => {
-        ignore = true;
-      }
-    }, []);
+  useEffect(() => {
+    getWorkouts();
+  }, []);
 
   const getWorkouts = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       await fetch(`${API_BASE}/workouts`)
         .then((res) => res.json())
         .then((data) => {
-          console.log({data})
+          console.log({ data });
           setWorkouts(data);
         });
-    } catch (error){
-      setError(error.message || "Unexpected Error")
+    } catch (error) {
+      setError(error.message || "Unexpected Error");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
+
+  const addWorkout = (newWorkout) => {
+    setWorkouts((prev) => [...prev, newWorkout]);
+  };
+
   return (
     <div className="App">
       <Header />
       <hr />
       <main style={{ flex: 1 }}>
-        <Outlet />
+        {/* Pass workouts + updater into Outlet (HomePage) */}
+        <Outlet context={{ workouts, addWorkout, loading, error }} />
       </main>
       <Footer />
     </div>
